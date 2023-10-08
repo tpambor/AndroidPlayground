@@ -25,6 +25,9 @@ android {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
+        debug {
+            enableUnitTestCoverage = true
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -47,6 +50,21 @@ android {
     lint {
         absolutePaths = false
     }
+}
+
+task<JacocoReport>("codeCoverageReportDebug") {
+    group = "Verification"
+    description = "Generate Jacoco coverage report for the debug build."
+
+    reports {
+        html.required.set(true)
+        xml.required.set(true)
+        csv.required.set(false)
+    }
+
+    sourceDirectories.setFrom("${project.projectDir}/src/main/java")
+    classDirectories.setFrom("${project.buildDir}/tmp/kotlin-classes/debug")
+    executionData.setFrom("${project.buildDir}/jacoco/testReleaseUnitTest.exec")
 }
 
 dependencies {
