@@ -78,27 +78,27 @@ jobs:
 
       # Build APK
       - run:
-        name: "Build APK"
-        command: |
-          ./gradlew assembleDebug;
-          mkdir -p ~/artifacts/;
-          cp ./app/build/outputs/apk/debug/app-debug.apk ~/artifacts/Vinilos-Equipo11.apk
+          name: "Build APK"
+          command: |
+            ./gradlew assembleDebug;
+            mkdir -p ~/artifacts/;
+            cp ./app/build/outputs/apk/debug/app-debug.apk ~/artifacts/Vinilos-Equipo11.apk
 
       # Save APK
       - store_artifacts:
-        path: ~/artifacts
+          path: ~/artifacts
 
       # Save gradle cache
       - android/save-gradle-cache
 
       # Save test results
       - run
-        name: "Save test results"
-        command: |
-          mkdir -p ~/test-results/junit/;
-          find . -type f -regex "./app/build/test-results/testDebugUnitTest/.*xml" -exec cp {} ~/test-results/junit/ \;
-          find . -type f -regex "./app/build/outputs/androidTest-results/connected/debug/.*xml" -exec cp {} ~/test-results/junit/ \;
-        when: always
+          name: "Save test results"
+          command: |
+            mkdir -p ~/test-results/junit/;
+            find . -type f -regex "./app/build/test-results/testDebugUnitTest/.*xml" -exec cp {} ~/test-results/junit/ \;
+            find . -type f -regex "./app/build/outputs/androidTest-results/connected/debug/.*xml" -exec cp {} ~/test-results/junit/ \;
+          when: always
 
       # Store test results
       - store_test_results:
