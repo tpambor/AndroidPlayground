@@ -92,7 +92,7 @@ jobs:
       - android/save-gradle-cache
 
       # Save test results
-      - run
+      - run:
           name: "Save test results"
           command: |
             mkdir -p ~/test-results/junit/;
